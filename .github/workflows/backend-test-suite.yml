@@ -1,0 +1,29 @@
+name: Testes
+
+on:
+  push:
+    branches:
+      - main # Mude "main" para o nome da sua branch principal, se necessário
+  pull_request:
+    branches:
+      - main # Mude "main" para o nome da sua branch principal, se necessário
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
+
+      - name: Configurar JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+
+      - name: Instalar o Maven
+        run: sudo apt-get install maven -y
+
+      - name: Compilar e executar testes
+        run: cd sostool-backend && mvn compile test
